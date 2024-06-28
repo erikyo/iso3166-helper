@@ -1,0 +1,32 @@
+{
+  "name": "iso3166-helper",
+  "version": "1.0.0",
+  "author": "Erik",
+  "license": "ISC",
+  "description": "A small helper for decoding iso3166-1 and iso3166-2 codes for regions and subregions",
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "keywords": [
+    "mapbox",
+    "geocoder",
+    "regions",
+    "subregions"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "start": "tsc --watch",
+    "build": "tsc",
+    "lint": "npx @biomejs/biome check --write src test",
+    "test": "node --experimental-vm-modules --experimental-specifier-resolution=node --test",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "typescript": "^5.5.2"
+  }
+}
