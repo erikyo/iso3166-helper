@@ -122,7 +122,3 @@ This module is licensed under the MIT License.
 ## Contributing
 
 Contributions are welcome! Please create a pull request or open an issue to discuss any changes.
-
----
-
-This README provides an extensive guide on how to use the `iso3166-helper` module, including installation, usage examples, function details, and test instructions.

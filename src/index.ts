@@ -1,14 +1,7 @@
-import { countries } from "./data/countries.js";
-import { regions } from "./data/regions.js";
-import { subRegions } from "./data/subRegions.js";
-import {
-	Countries,
-	CountryData,
-	type RegionData,
-	Regions,
-	type SubRegionDataExt,
-	type SubRegionsExt,
-} from "./types";
+import {countries} from "./data/countries.js";
+import {regions} from "./data/regions.js";
+import {subRegions} from "./data/subRegions.js";
+import type {RegionData, SubRegionDataExt, SubRegionsExt} from "./types";
 
 /**
  * Get state by ISO2 code
