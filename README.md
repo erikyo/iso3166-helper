@@ -2,6 +2,8 @@
 
 This NPM module provides utilities to work with regions, states, and sub-regions. It allows fetching regions and sub-regions by their codes and offers functionality to retrieve all sub-regions belonging to a specific region or state.
 
+Bundled with a dataset containing 250 Countries, 3766 Regions and 1301 Subregions
+
 ## Installation
 
 To install the module, run:
