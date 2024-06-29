@@ -1,3 +1,16 @@
+/** tree structure containing countries, regions, and subregions */
+export type IsoTree = Record<
+	string,
+	{
+		int: string;
+		original: string;
+		regions?: Record<
+			string,
+			{ name: string; code: string; subregions?: Record<string, string> }
+		>;
+	}
+>;
+
 /** The single region dataset */
 export type RegionData = { [key: string]: string };
 

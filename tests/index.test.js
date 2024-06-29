@@ -3,6 +3,15 @@ import test from "node:test";
 
 import {validateCode, getCountry, getCountryName, getRegion,  getSubRegion, getSubRegionsby, getTree} from "../lib/index.js";
 
+import {countries} from "../lib/data/countries.js";
+import {regions} from "../lib/data/regions.js";
+import {subRegions} from "../lib/data/subRegions.js";
+
+test('Count the dataset entries', () => {
+	console.log( "Countries: " + Object.values( countries ).length)
+	console.log( "Regions: " + Object.values( regions ).flatMap( (value) => Object.values( value )).length)
+	console.log( "Subregions: " + Object.values( subRegions ).length)
+});
 
 test('Validate code by type', () => {
 	assert.strictEqual(validateCode('IT'), 'country');

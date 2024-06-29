@@ -1,7 +1,8 @@
-import {countries} from "./data/countries.js";
-import {regions} from "./data/regions.js";
-import {subRegions} from "./data/subRegions.js";
-import type {RegionData, SubRegionDataExt, SubRegionsExt} from "./types";
+import { countries } from "./data/countries.js";
+import { regions } from "./data/regions.js";
+import { subRegions } from "./data/subRegions.js";
+import type { RegionData, SubRegionDataExt, SubRegionsExt } from "./types";
+import type { IsoTree } from "./types";
 
 /**
  * Validates the given code to determine if it belongs to a country, region, or subregion.
@@ -9,17 +10,17 @@ import type {RegionData, SubRegionDataExt, SubRegionsExt} from "./types";
  * @param {string} code - The code to be validated.
  * @return {string|false} The type of the code if it belongs to a country, region, or subregion; otherwise, false.
  */
-function validateCode(code: string): string|false {
-	if (code in countries){
-		return 'country';
+function validateCode(code: string): string | false {
+	if (code in countries) {
+		return "country";
 	}
 	for (const key in regions) {
 		if (code in regions[key]) {
-			return 'region';
+			return "region";
 		}
 	}
 	if (code in subRegions) {
-		return 'subregion';
+		return "subregion";
 	}
 	return false;
 }
@@ -29,37 +30,41 @@ function validateCode(code: string): string|false {
  *
  * @return {object} The generated tree structure.
  */
-function getTree(): Record<string, Record<string, any>> {
+function getTree(): IsoTree {
 	const tree = {};
 	// add countries
 	for (const key in countries) {
-		tree[key] = {...countries[key], code: key};
+		tree[key] = { ...countries[key], code: key };
 	}
 	// add regions
 	for (const key in regions) {
-		if (!tree[key]['regions']) {
-			tree[key]['regions'] = {};
+		if (!tree[key].regions) {
+			tree[key].regions = {};
 		}
 		for (const subkey in regions[key]) {
-			if (!tree[key]['regions'][subkey]) {
-				tree[key]['regions'][subkey] = {};
+			if (!tree[key].regions[subkey]) {
+				tree[key].regions[subkey] = {};
 			}
-			tree[key]['regions'][subkey] = {name: regions[key][subkey], code: subkey};
+			tree[key].regions[subkey] = {
+				name: regions[key][subkey],
+				code: subkey,
+			};
 		}
 	}
 	// add subregions
 	for (const key in subRegions) {
 		const current = subRegions[key];
-		if (!tree[current.country]['regions']) {
-			tree[current.country]['regions']= {};
+		if (!tree[current.country].regions) {
+			tree[current.country].regions = {};
 		}
-		if (!tree[current.country]['regions'][current.region]) {
-			tree[current.country]['regions'][current.region] = {};
+		if (!tree[current.country].regions[current.region]) {
+			tree[current.country].regions[current.region] = {};
 		}
-		if (!tree[current.country]['regions'][current.region]["subregions"]) {
-			tree[current.country]['regions'][current.region]["subregions"] = {};
+		if (!tree[current.country].regions[current.region].subregions) {
+			tree[current.country].regions[current.region].subregions = {};
 		}
-		tree[current.country]['regions'][current.region]["subregions"][key] = current.name;
+		tree[current.country].regions[current.region].subregions[key] =
+			current.name;
 	}
 	return tree;
 }
@@ -83,7 +88,10 @@ function getCountry(code: string): RegionData | null {
  * @param type "int" or "original" whenever the name should be in international or original form (e.g. "Italy" or "Italia")
  * @return The name of the country or null if not found
  */
-function getCountryName(code: string, type: "int" | "original" = "int"): string | null {
+function getCountryName(
+	code: string,
+	type: "int" | "original" = "int",
+): string | null {
 	if (code in countries) {
 		return countries[code][type];
 	}
@@ -139,10 +147,18 @@ function getSubRegionsby(
 		// if the code is the same as current region type
 		if (subRegions[key][type] === code) {
 			// add the subregion
-			collectedSubRegions.push({ subregionCode: key, ...subRegions[key]});
+			collectedSubRegions.push({ subregionCode: key, ...subRegions[key] });
 		}
 	}
 	return collectedSubRegions;
 }
 
-export { validateCode, getTree, getCountry, getRegion, getSubRegion, getCountryName, getSubRegionsby };
+export {
+	validateCode,
+	getTree,
+	getCountry,
+	getRegion,
+	getSubRegion,
+	getCountryName,
+	getSubRegionsby,
+};

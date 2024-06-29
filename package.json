@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"author": "Erik",
 	"license": "ISC",
-	"description": "A small helper for decoding iso3166-1 and iso3166-2 codes for regions and subregions",
+	"description": "Provides utilities to work with regions, states, and sub-regions. It allows fetching regions and sub-regions by their codes and offers functionality to retrieve all sub-regions belonging to a specific region or state.",
 	"type": "module",
 	"sideEffects": false,
 	"main": "lib/index.js",
@@ -18,6 +18,8 @@
 	"keywords": [
 		"mapbox",
 		"geocoder",
+		"iso3661",
+		"country",
 		"regions",
 		"subregions"
 	],
@@ -27,7 +29,7 @@
 	"scripts": {
 		"start": "tsc --watch",
 		"build": "tsc",
-		"lint": "npx @biomejs/biome check --write src test",
+		"lint": "npx @biomejs/biome check --fix --unsafe src test",
 		"test": "node --experimental-vm-modules --experimental-specifier-resolution=node --test",
 		"prepublishOnly": "npm run build",
 		"pretest": "npm run build"
