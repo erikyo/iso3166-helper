@@ -4,11 +4,32 @@ import {subRegions} from "./data/subRegions.js";
 import type {RegionData, SubRegionDataExt, SubRegionsExt} from "./types";
 
 /**
+ * Validates the given code to determine if it belongs to a country, region, or subregion.
+ *
+ * @param {string} code - The code to be validated.
+ * @return {string|false} The type of the code if it belongs to a country, region, or subregion; otherwise, false.
+ */
+function validateCode(code: string): string|false {
+	if (code in countries){
+		return 'country';
+	}
+	for (const key in regions) {
+		if (code in regions[key]) {
+			return 'region';
+		}
+	}
+	if (code in subRegions) {
+		return 'subregion';
+	}
+	return false;
+}
+
+/**
  * Generates a tree structure containing countries, regions, and subregions.
  *
  * @return {object} The generated tree structure.
  */
-export function getTree(): Record<string, Record<string, any>> {
+function getTree(): Record<string, Record<string, any>> {
 	const tree = {};
 	// add countries
 	for (const key in countries) {
@@ -124,4 +145,4 @@ function getSubRegionsby(
 	return collectedSubRegions;
 }
 
-export { getCountryName, getSubRegion, getSubRegionsby, getCountry, getRegion };
+export { validateCode, getTree, getCountry, getRegion, getSubRegion, getCountryName, getSubRegionsby };

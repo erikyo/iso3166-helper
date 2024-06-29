@@ -22,12 +22,36 @@ import {getRegion, getCountry, getCountryName, getSubRegion, getSubRegionsby} fr
 
 ## Functions
 
+- [validateCode()](#validateCode)
 - [getTree()](#getTree)
 - [getCountry()](#getCountry)
 - [getRegion()](#getRegion)
 - [getSubRegion()](#getSubRegion)
 - [getSubRegionsby()](#getSubRegionsby)
 - [getCountryName()](#getCountryName)
+
+### validateCode
+
+This function checks if a code is valid.
+
+`validateCode(code: string)`
+
+**Returns:**
+
+- The type of code (country, region, subregion) or false if the code is invalid.
+
+**Parameters:**
+
+- `code` (string): The code to validate.
+
+**Example:**
+
+```javascript
+console.log(validateCode("IT")); // Output: "country"
+console.log(validateCode("IT-45")); // Output: "region"
+console.log(validateCode("IT-RA")); // Output: "subregion"
+console.log(validateCode("IT-ABCDE")); // Output: false
+```
 
 ### getTree
 
