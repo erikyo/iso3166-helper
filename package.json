@@ -5,13 +5,15 @@
 	"license": "ISC",
 	"description": "A small helper for decoding iso3166-1 and iso3166-2 codes for regions and subregions",
 	"type": "module",
+	"sideEffects": false,
 	"main": "lib/index.js",
 	"module": "lib/index.js",
+	"types": "lib/index.d.ts",
 	"files": [
 		"lib/**/*",
 		"tests/**/*",
 		"*.json",
-		"+.md"
+		"*.md"
 	],
 	"keywords": [
 		"mapbox",
@@ -22,7 +24,6 @@
 	"engines": {
 		"node": ">=20"
 	},
-	"sideEffects": false,
 	"scripts": {
 		"start": "tsc --watch",
 		"build": "tsc",

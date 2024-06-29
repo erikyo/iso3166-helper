@@ -4,9 +4,50 @@ import {subRegions} from "./data/subRegions.js";
 import type {RegionData, SubRegionDataExt, SubRegionsExt} from "./types";
 
 /**
+ * Generates a tree structure containing countries, regions, and subregions.
+ *
+ * @return {object} The generated tree structure.
+ */
+export function getTree(): Record<string, Record<string, any>> {
+	const tree = {};
+	// add countries
+	for (const key in countries) {
+		tree[key] = {...countries[key], code: key};
+	}
+	// add regions
+	for (const key in regions) {
+		if (!tree[key]['regions']) {
+			tree[key]['regions'] = {};
+		}
+		for (const subkey in regions[key]) {
+			if (!tree[key]['regions'][subkey]) {
+				tree[key]['regions'][subkey] = {};
+			}
+			tree[key]['regions'][subkey] = {name: regions[key][subkey], code: subkey};
+		}
+	}
+	// add subregions
+	for (const key in subRegions) {
+		const current = subRegions[key];
+		if (!tree[current.country]['regions']) {
+			tree[current.country]['regions']= {};
+		}
+		if (!tree[current.country]['regions'][current.region]) {
+			tree[current.country]['regions'][current.region] = {};
+		}
+		if (!tree[current.country]['regions'][current.region]["subregions"]) {
+			tree[current.country]['regions'][current.region]["subregions"] = {};
+		}
+		tree[current.country]['regions'][current.region]["subregions"][key] = current.name;
+	}
+	return tree;
+}
+
+/**
  * Get state by ISO2 code
  *
  * @param code - state ISO 2 digits code
+ * @return The state or null if not found
  */
 function getCountry(code: string): RegionData | null {
 	if (code in regions) {
@@ -19,8 +60,9 @@ function getCountry(code: string): RegionData | null {
  * Get the name of the country
  * @param code Country Iso2 code
  * @param type "int" or "original" whenever the name should be in international or original form (e.g. "Italy" or "Italia")
+ * @return The name of the country or null if not found
  */
-function getCountryName(code: string, type: "int" | "original" = "int") {
+function getCountryName(code: string, type: "int" | "original" = "int"): string | null {
 	if (code in countries) {
 		return countries[code][type];
 	}
@@ -31,6 +73,7 @@ function getCountryName(code: string, type: "int" | "original" = "int") {
  * Returns the region given an ISO 3661-1 code
  *
  * @param code ISO 3661-1 code (e.g. "IT-45")
+ * @return The region or null if not found
  */
 function getRegion(code: string): string | null {
 	const iso2 = code.split("-")[0];
@@ -52,6 +95,7 @@ function getSubRegion(code: string): SubRegionDataExt | null {
 	if (code in subRegions) {
 		return {
 			...subRegions[code],
+			subregionCode: code,
 			countryName: getCountryName(subRegions[code].country),
 			regionName: getRegion(subRegions[code].region),
 		};
@@ -74,7 +118,7 @@ function getSubRegionsby(
 		// if the code is the same as current region type
 		if (subRegions[key][type] === code) {
 			// add the subregion
-			collectedSubRegions.push(subRegions[key]);
+			collectedSubRegions.push({ subregionCode: key, ...subRegions[key]});
 		}
 	}
 	return collectedSubRegions;
