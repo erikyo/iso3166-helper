@@ -5,6 +5,16 @@ import type { RegionData, SubRegionDataExt, SubRegionsExt } from "./types";
 import type { IsoTree } from "./types";
 
 /**
+ * Utility function to get the ISO 2 code of a country, region, or subregion.
+ * @param code - The code to be converted to ISO 2 code, and it Can be either a country, region, or subregion code (e.g. "IT", "IT-45", "IT-BO").
+ *
+ * @return The ISO 2 code of the country, region, or subregion.
+ */
+function getIso2(code: string): string | null {
+	return code.split("-")[0];
+}
+
+/**
  * Validates the given code to determine if it belongs to a country, region, or subregion.
  *
  * @param {string} code - The code to be validated.
@@ -22,6 +32,39 @@ function validateCode(code: string): string | false {
 	if (code in subRegions) {
 		return "subregion";
 	}
+	return false;
+}
+
+/**
+ * Returns if the given code is child of the given parent code
+ * @param {string} code - The child code to be compared with the parent.
+ * @param {string} parent - The parent code to be compared with the child.
+ * @return {boolean} True if the child code is child of the parent code; otherwise, false.
+ */
+function isChildOf(code: string, parent: string): boolean {
+	// check if the child is a region or a subregion
+	const type = validateCode(code);
+	if (type === false || type === "country") {
+		return false;
+	}
+
+	// check if the parent is a country, region
+	const parentType = validateCode(parent);
+	if (parentType === false || parentType === "subregion") {
+		return false;
+	}
+
+	// if the parent is a country, and the child is a region or subregion
+	if (parentType === "country") {
+		// the country iso is the same as the region/subregion prefix
+		return getIso2(code) === parent;
+	}
+
+	// check if the child is a subregion of the parent region
+	if (parentType === "region") {
+		return subRegions[code].region === parent;
+	}
+
 	return false;
 }
 
@@ -105,7 +148,7 @@ function getCountryName(
  * @return The region or null if not found
  */
 function getRegion(code: string): string | null {
-	const iso2 = code.split("-")[0];
+	const iso2 = getIso2(code);
 	if (iso2 in regions) {
 		if (code in regions[iso2]) {
 			return regions[iso2][code];
@@ -154,6 +197,7 @@ function getSubRegionsby(
 }
 
 export {
+	isChildOf,
 	validateCode,
 	getTree,
 	getCountry,
