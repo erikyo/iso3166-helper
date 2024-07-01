@@ -1,24 +1,26 @@
 {
 	"name": "iso3166-helper",
 	"version": "1.0.0",
-	"author": "Erik",
-	"license": "ISC",
+	"author": "Erik <erik@codekraft.it>",
+	"license": "MIT",
 	"description": "Provides utilities to work with regions, states, and sub-regions. It allows fetching regions and sub-regions by their codes and offers functionality to retrieve all sub-regions belonging to a specific region or state.",
 	"type": "module",
 	"sideEffects": false,
 	"main": "lib/index.js",
 	"module": "lib/index.js",
 	"types": "lib/index.d.ts",
-	"files": [
-		"lib/**/*",
-		"tests/**/*",
-		"*.json",
-		"*.md"
-	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/erikyo/iso3166-helper.git"
+	},
+	"bugs": {
+		"url": "https://github.com/erikyo/iso3166-helper/issues"
+	},
+	"files": ["lib/**/*", "tests/**/*", "*.json", "*.md"],
 	"keywords": [
 		"mapbox",
 		"geocoder",
-		"iso3661",
+		"iso3166",
 		"country",
 		"regions",
 		"subregions"

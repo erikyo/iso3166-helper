@@ -1,10 +1,8 @@
 # iso3166-helper
 
-This NPM module provides utilities to work with regions, states, and sub-regions using the [ISO 3166 standard](https://en.wikipedia.org/wiki/ISO_3166-1).
+This NPM module provides utilities to work with regions, states, and subregions using the [ISO 3166 standard](https://en.wikipedia.org/wiki/ISO_3166-1).
 
-It allows fetching regions and sub-regions by their codes and offers functionality to retrieve all sub-regions belonging to a specific region or state.
-
-Bundled with a dataset containing 250 Countries, 3766 Regions and 1301 Subregions
+it's a set of utilities to work with regions, states, and subregions. Bundled with a dataset containing 250 Countries, 3766 Regions and 1301 Subregions
 
 ## Installation
 
@@ -28,6 +26,7 @@ import {getRegion, getCountry, getCountryName, getSubRegion, getSubRegionsby} fr
 
 - [validateCode()](#validateCode)
 - [getTree()](#getTree)
+- [isChildOf()](#isChildOf)
 - [getCountry()](#getCountry)
 - [getRegion()](#getRegion)
 - [getSubRegion()](#getSubRegion)
@@ -57,21 +56,45 @@ console.log(validateCode("IT-RA")); // Output: "subregion"
 console.log(validateCode("IT-ABCDE")); // Output: false
 ```
 
+### isChildOf
+
+This function checks if a code is a child of another code.
+
+`isChildOf(code: string, parent: string)`
+
+**Returns:**
+
+- True if both codes are valid and if the code is a child of the parent code; otherwise, false.
+
+**Parameters:**
+
+- `code` (string): The code to be compared with the parent.
+- `parent` (string): The parent code.
+
+**Example:**
+
+```javascript
+console.log(isChildOf("IT-BO", "IT-45")); // Output: true
+console.log(isChildOf("IT-45", "IT")); // Output: true
+console.log(isChildOf("IT-45", "ABC")); // Output: false
+```
+
 ### getTree
 
-This function retrieves a tree of regions and sub-regions.
+This function retrieves a tree of regions and subregions.
 
 `getTree()`
 
 **Returns:**
 
-- An object containing the tree of regions and sub-regions.
+- An object containing the tree of regions and subregions.
 - Each region is represented as an object with the following properties:
 - - `code` (string): The code of the region.
 - - `int` (string): The name of the country.
 - - `original` (string): The original name of the country.
 - - `region` (object): The code of the parent region.
-- - - `subregions` (array): An array of sub-regions belonging to the region.
+- - `code` (string): The code of the region.
+- - - `subregions` (object): an object of subregions, code and name as key and value pairs.
 
 **Example:**
 
