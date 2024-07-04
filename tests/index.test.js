@@ -111,6 +111,7 @@ test("Is child of", () => {
 test("Is not child of", () => {
 	assert.strictEqual(isChildOf("IT-BO", "IT-25"), false);
 	assert.strictEqual(isChildOf("IT-45", "FR"), false);
+	assert.strictEqual(isChildOf("IT-45", "CH-TG"), false);
 	assert.strictEqual(isChildOf("IT-BO", "FR"), false);
 	assert.strictEqual(isChildOf("IT", "IT-45"), false);
 	assert.strictEqual(isChildOf("IT", "IT-BO"), false);

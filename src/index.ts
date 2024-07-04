@@ -62,7 +62,7 @@ function isChildOf(code: string, parent: string): boolean {
 
 	// check if the child is a subregion of the parent region
 	if (parentType === "region") {
-		return subRegions[code].region === parent;
+		return subRegions[code]?.region === parent;
 	}
 
 	return false;

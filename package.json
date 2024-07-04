@@ -1,6 +1,6 @@
 {
 	"name": "iso3166-helper",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"author": "Erik <erik@codekraft.it>",
 	"license": "MIT",
 	"description": "Provides utilities to work with regions, states, and sub-regions. It allows fetching regions and sub-regions by their codes and offers functionality to retrieve all sub-regions belonging to a specific region or state.",
